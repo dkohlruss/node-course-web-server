@@ -2,6 +2,8 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+const port = process.env.PORT || 3000;
+
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -22,9 +24,9 @@ app.use((req, res, next) => {
 });
 //app.use registers middleware
 
-app.use((req,res,next) => {
-  res.render('maintenance.hbs');
-});
+//app.use((req,res,next) => {
+//  res.render('maintenance.hbs');
+//});
 
 app.use(express.static(__dirname + '/public'));
 
@@ -45,6 +47,12 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/projects', (req, res) => {
+  res.render('projects.hbs', {
+    pageTitle: 'Projects Page',
+  });
+});
+
 app.get('/about', (req, res) => {
   res.render('about.hbs', {
     pageTitle: 'About Page',
@@ -57,6 +65,6 @@ app.get('/bad', (req, res) => {
   })
 });
 
-app.listen(3000, () => {
-  console.log('server is up on port 3000');
+app.listen(port, () => {
+  console.log(`server is up on port ${port}`);
 });
